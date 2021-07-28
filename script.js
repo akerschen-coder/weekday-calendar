@@ -1,52 +1,66 @@
-//variables pulled from html 
-var timeDisplayEl = $('#time-display'); 
-var timeBlock = $('time-block');
-//var saveButton = $('saveBtn');
-var textArea = $('.description');
+$(document).ready(function () {
 
-// Display day 
+
+    //variables pulled from html 
+    var timeDisplayEl = $('#time-display');
+    var timeBlock = $('time-block');
+    //var saveButton = $('saveBtn');
+    var textArea = $('.description');
+    // Display day 
     var rightNow = moment().format('MMM DD, YYYY');
     timeDisplayEl.text(rightNow);
 
-// time for textarea
-    let currentTime = moment().hour();
-    console.log(currentTime)
+    function timeUpdate() {
 
-//variable to loop through on time from html
-  var time = [$('#8'), $('#9'), $('#10'), $('#11'), $('#12'), $('#13'), $('#14'), $('#15'), $('#16')];
 
-// else if statments for color and time 
-for (let i = 0; i < time.length; i++) {
-    var timeBlock = time[i].attr('id'); 
-    
-     if(timeBlock > currentTime) {
-        time[i].parent().addClass('future') 
-     } else if(timeBlock == currentTime) {
-        time[i].parent().addClass('present');
-    } else {
-        time[i].parent().addClass('past')
-}
-}  
+        // time for textarea
+        let currentTime = moment().hour();
+        console.log(currentTime)
 
-//save button function to save 
-$('.saveBtn').on('click', function () {
-    console.log("Button clicked!")
-    //target text 
-    var text = $(this).siblings(".description").val();
-    //target time 
-    var time = $(this).siblings(0).attr("id");
-                     
+        //Loops through ids to add colors 
+        $('.time-block').each(function () {
+            var blockhour = parseInt($(this).attr('id'))
+            if (blockhour < currentTime) {
+                $(this).addClass('past')
+            } else if (blockhour === currentTime) {
+                $(this).removeClass('past');
+                $(this).addClass('present');
+            } else {
+                $(this).removeClass('past');
+                $(this).removeClass('present');
+                $(this).addClass('future')
+            }
 
-    localStorage.setItem(time, text);
+        })
+    }
 
-    
+    timeUpdate();
+    //save button function to save 
+    $('.saveBtn').on('click', function () {
+        console.log("Button clicked!")
+        //target text 
+        var text = $(this).siblings(".description").val();
+        //target time 
+        var time = $(this).parent().attr("id");
 
-    
-//call local storage- how to keep it up there tho???  
 
- localStorage.getItem("text");
+        localStorage.setItem(time, text);
+
+
+
+
+    })
+    //call local storage- how to keep it up there tho???  
+
+    $("#8 .description").val(localStorage.getItem("8"));
+    $("#9 .description").val(localStorage.getItem("9"));
+    $("#10 .description").val(localStorage.getItem("10"));
+    $("#11 .description").val(localStorage.getItem("11"));
+    $("#12 .description").val(localStorage.getItem("12"));
+    $("#13 .description").val(localStorage.getItem("13"));
+    $("#14 .description").val(localStorage.getItem("14"));
+    $("#15 .description").val(localStorage.getItem("15"));
+    $("#16 .description").val(localStorage.getItem("16"));
+
 
 })
-
-
-
