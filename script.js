@@ -3,9 +3,7 @@ $(document).ready(function () {
 
     //variables pulled from html 
     var timeDisplayEl = $('#time-display');
-    var timeBlock = $('time-block');
-    //var saveButton = $('saveBtn');
-    var textArea = $('.description');
+  
     // Display day 
     var rightNow = moment().format('MMM DD, YYYY');
     timeDisplayEl.text(rightNow);
